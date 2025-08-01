@@ -9,7 +9,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun AddNoteScreen() {
+fun AddNoteScreen(
+    onSaveNote: (String, String) -> Unit
+) {
     var title by remember { mutableStateOf("") }
     var content by remember { mutableStateOf("") }
 
@@ -43,12 +45,12 @@ fun AddNoteScreen() {
 
         Button(
             onClick = {
-                // Aquí más adelante guardaremos la nueva nota
-                println("Guardar nota: $title - $content")
+                onSaveNote(title, content)
             },
             modifier = Modifier.align(Alignment.End)
         ) {
             Text("Guardar")
         }
+
     }
 }

@@ -11,7 +11,8 @@ import com.example.noteappcompose.ui.components.NoteItem
 @Composable
 fun NotesScreen(
     notes: List<Note>,
-    onAddNoteClicked: () -> Unit = {}
+    onAddNoteClicked: () -> Unit = {},
+    onDeleteNoteClicked: (Note) -> Unit
 ) {
     Scaffold(
         floatingActionButton = {
@@ -22,7 +23,7 @@ fun NotesScreen(
     ) { innerPadding ->
         LazyColumn(contentPadding = innerPadding) {
             items(notes) { note ->
-                NoteItem(note = note)
+                NoteItem(note = note, onDeleteClick = onDeleteNoteClicked)
             }
         }
     }
