@@ -1,11 +1,11 @@
-package com.example.noteappcompose.ui.components
+package com.example.noteappcompose.presentation.notes
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.noteappcompose.model.Note
+import com.example.noteappcompose.domain.model.Note
 
 @Composable
 fun NoteItem(

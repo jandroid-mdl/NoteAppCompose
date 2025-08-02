@@ -8,9 +8,9 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import com.example.noteappcompose.model.Note
-import com.example.noteappcompose.ui.AddNoteScreen
-import com.example.noteappcompose.ui.NotesScreen
+import com.example.noteappcompose.domain.model.Note
+import com.example.noteappcompose.presentation.addnote.AddNoteScreen
+import com.example.noteappcompose.presentation.notes.NotesScreen
 import com.example.noteappcompose.ui.Screen
 import com.example.noteappcompose.utils.sampleNotes
 import com.example.noteappcompose.ui.theme.NoteAppComposeTheme

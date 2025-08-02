@@ -1,4 +1,4 @@
-package com.example.noteappcompose.ui
+package com.example.noteappcompose.presentation.addnote
 
 
 import androidx.compose.foundation.layout.*
