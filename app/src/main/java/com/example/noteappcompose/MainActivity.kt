@@ -4,56 +4,45 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import com.example.noteappcompose.domain.model.Note
+import com.example.noteappcompose.data.repository.NoteRepositoryImpl
+
+import com.example.noteappcompose.domain.usecase.AddNote
+import com.example.noteappcompose.domain.usecase.DeleteNote
+import com.example.noteappcompose.domain.usecase.GetNotes
 import com.example.noteappcompose.presentation.addnote.AddNoteScreen
 import com.example.noteappcompose.presentation.notes.NotesScreen
-import com.example.noteappcompose.ui.Screen
-import com.example.noteappcompose.utils.sampleNotes
-import com.example.noteappcompose.ui.theme.NoteAppComposeTheme
+import com.example.noteappcompose.presentation.notes.NotesViewModel
+
+
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+
         setContent {
-            NoteAppComposeTheme {
-                val notes = remember { mutableStateListOf<Note>() }
-                var currentScreen by remember { mutableStateOf(Screen.Notes) }
+            val repository = NoteRepositoryImpl()
+            val getNotes = GetNotes(repository)
+            val addNote = AddNote(repository)
+            val deleteNote = DeleteNote(repository)
 
-                if (notes.isEmpty()) {
-                    notes.addAll(sampleNotes)
-                }
+            val viewModel = NotesViewModel(getNotes, addNote, deleteNote)
 
-                when (currentScreen) {
-                    Screen.Notes -> NotesScreen(
-                        notes = notes,
-                        onAddNoteClicked = {
-                            currentScreen = Screen.AddNote
-                        },
-                        onDeleteNoteClicked = { noteToDelete ->
-                            notes.remove(noteToDelete)
-                        }
-                    )
-                    Screen.AddNote -> AddNoteScreen(
-                        onSaveNote = { title, content ->
-                            notes.add(
-                                Note(
-                                    id = notes.size + 1,
-                                    title = title,
-                                    content = content
-                                )
-                            )
-                            currentScreen = Screen.Notes
-                        }
-                    )
-                }
+            var currentScreen by remember { mutableStateOf("notes") }
+
+            when (currentScreen) {
+                "notes" -> NotesScreen(
+                    viewModel = viewModel,
+                    onAddClick = { currentScreen = "add" }
+                )
+                "add" -> AddNoteScreen(
+                    viewModel = viewModel,
+                    onNoteSaved = { currentScreen = "notes" }
+                )
             }
         }
-
-
-
     }
 }
